@@ -476,8 +476,8 @@ We defined the following data structures in order to solve this problem.
 
 * We use two global variables in the program:
 <pre>
-	currVertexNumber	: This is the next vertex number in monotonically increasing order from 0,1,2,.... that can be assigned to a newly seen name.
-	lastMaxTime		: This is the latest time for which we have seen a venmo payment and created an edge.
+	currVertexNumber: This is the next vertex number in monotonically increasing order from 0,1,2,.... that can be assigned to a newly seen name.
+	lastMaxTime	: This is the latest time for which we have seen a venmo payment and created an edge.
 </pre>
 <b>Algorithm</b>
 
@@ -498,5 +498,21 @@ We defined the following data structures in order to solve this problem.
 * Finally write out the median degree of the graph. To do this we create  a new list called `degreeList` in which we populate the degree of each vertex in the graph and then find the median.
 
 <b>Test Cases</b>
+
+<pre>
+$ ./run_tests.sh 
+[PASS]: test-1-venmo-trans
+[PASS]: test-10-venmo-trans
+[PASS]: test-11-venmo-trans
+[PASS]: test-2-venmo-trans
+[PASS]: test-3-venmo-trans
+[PASS]: test-4-venmo-trans
+[PASS]: test-5-venmo-trans
+[PASS]: test-6-venmo-trans
+[PASS]: test-7-venmo-trans
+</pre>
+
+
+
 
 
