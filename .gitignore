@@ -2,5 +2,6 @@
 *.py[cod]
 *.twitter
 .DS_Store
+*.swp
 insight_testsuite/results.txt
 insight_testsuite/temp

@@ -190,7 +190,7 @@ for eachLine in inputPayFile:
 	#print eachLine
 	error = processNextPay(eachLine, vertexNameMap, timeIndex, sixtySecWin, edgeGraph)
 	if error:
-		next
+		continue
 	median = "%.2f" % findMedianDegree(edgeGraph)
 	outputDegFile.write('%s' % median)
 	outputDegFile.write("\n")
