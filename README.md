@@ -466,10 +466,13 @@ We defined the following data structures in order to solve this problem.
 
 	We need to keep the latest time that an edge was encountered. This is so that if the same edge is encountered again but with an earlier time stamp (since payments can be out of order) we can ignore it. There can only be one edge between a pair of vertices in the graph.
 
+![venmo-graph](images/timeIndex.png]
+
 * *sixtySecWin = []*
 	
 	This is a list that is 60 slots long. Each slot represents one second and conatins a pointer to another list of edges. The pointer in slot 0 points to list of edges that were created at the latest time seen. Every slot represents edges created that many seconds before the current latest edge. Thus slot 10 will contain pointer to all the edges that were created 10 seconds before etc.
 
+![venmo-graph](images/sixtySecWin.png]
 
 <b>Algortihm</b>
 
