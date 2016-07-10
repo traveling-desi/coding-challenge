@@ -460,6 +460,8 @@ We defined the following data structures in order to solve this problem.
 
 	The relation between the actor and the target creates an edge. In this exercise the edges are non-directional (i.e `actor <-> target` is the same as `target <-> actor`). However to find the degree of the graph quickly we treat the non-diretional edge as two uni-directional edges `actor -> target` and `actor <- target`. We then add these edges in the edgeGraph data structure, which is again a dictionary. So in order to repesent the edge `actor <-> target`, we have `edgeGraph[actor] = target` and `edgeGraph[target] = actor`. We do this for all the edges encountered. Since a vertex can talk to multiple other vertices we have to maintain a list. We chose a set instead of a list, so that we don't need to worry about duplicates.  The degree for any vertex `v` at any time then is given by `degree = len(edgeGraph[v])`. 
 
+![venmo-graph](images/edgeGraph.png)
+
 * *timeIndex = dict()*
 
 	We need to keep the latest time that an edge was encountered. This is so that if the same edge is encountered again but with an earlier time stamp (since payments can be out of order) we can ignore it. There can only be one edge between a pair of vertices in the graph.
