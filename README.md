@@ -10,6 +10,8 @@
 8. [Repo directory structure] (README.md#repo-directory-structure)
 9. [Testing your directory structure and output format] (README.md#testing-your-directory-structure-and-output-format)
 10. [FAQ] (README.md#faq)
+11. [Solution] (README.md#Solution)
+
 
 For this coding challenge, you will develop tools that could help analyze Venmo’s dataset. Some of the challenges here mimic real world problems.
 
@@ -448,24 +450,19 @@ We(I) have used Python 2.7 for solving this exercise. We used python because tha
 
 <b>Data Structures</b>
 
-We defined the following data strutures in order to solve this problem.
+We defined the following data structures in order to solve this problem.
 
 * *vertexNameMap = dict()*
-<pre>
-The Venmo payment has names of people as actor and target. The Graph to represent this payment will have the people as vertices and the relations between them as an edge. We dont need to deal with the names of people. In order to save memory space we map the names of people to numbers that can be used to represent the vertices. This represented as a dictionary (Associative Array) for a quick lookup whether a name has been already enountered.
-</pre>
+
+	The Venmo payment has names of people as actor and target. The Graph to represent this payment will have the people as vertices and the relations between them as an edge. We dont need to deal with the names of people. In order to save memory space we map the names of people to numbers that can be used to represent the vertices. This represented as a dictionary (Associative Array) for a quick lookup whether a name has been already enountered.
 
 * *edgeGraph = dict()*
 
-<pre>
-The relation between the actor and the target creates an edge. In this exercise the edges are non-directional (i.e `actor <-> target` is the same as `target <-> actor`). However to find the degree of the graph quickly we treat the non-diretional edge as two uni-directional edges `actor -> target` and `actor <- target`. We then add these edges in the edgeGraph data structure, which is again a dictionary. So in order to repesent the edge `actor <-> target`, we have `edgeGraph[actor] = target` and `edgeGraph[target] = actor`. We do this for all the edges encountered. Since a vertex can talk to multiple other vertices we have to maintain a list. We chose a set instead of a list, so that we don't need to worry about duplicates.  The degree for any vertex `v` at any time then is given by `degree = len(edgeGraph[v])`. 
-</pre>
+	The relation between the actor and the target creates an edge. In this exercise the edges are non-directional (i.e `actor <-> target` is the same as `target <-> actor`). However to find the degree of the graph quickly we treat the non-diretional edge as two uni-directional edges `actor -> target` and `actor <- target`. We then add these edges in the edgeGraph data structure, which is again a dictionary. So in order to repesent the edge `actor <-> target`, we have `edgeGraph[actor] = target` and `edgeGraph[target] = actor`. We do this for all the edges encountered. Since a vertex can talk to multiple other vertices we have to maintain a list. We chose a set instead of a list, so that we don't need to worry about duplicates.  The degree for any vertex `v` at any time then is given by `degree = len(edgeGraph[v])`. 
 
 * *timeIndex = dict()*
 
-<pre>
-We need to keep the latest time that an edge was encountered. This is so that if the same edge is encountered again but with an earlier time stamp (since payments can be out of order) we can ignore it. There can only be one edge between a pair of vertices in the graph.
-</pre>
+	We need to keep the latest time that an edge was encountered. This is so that if the same edge is encountered again but with an earlier time stamp (since payments can be out of order) we can ignore it. There can only be one edge between a pair of vertices in the graph.
 
 * *sixtySecWin = []*
 
