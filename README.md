@@ -500,16 +500,16 @@ We defined the following data structures in order to solve this problem.
 <b>Test Cases</b>
 
 <pre>
-$ ./run_tests.sh 
-[PASS]: test-1-venmo-trans
-[PASS]: test-10-venmo-trans
-[PASS]: test-11-venmo-trans
-[PASS]: test-2-venmo-trans
-[PASS]: test-3-venmo-trans
-[PASS]: test-4-venmo-trans
-[PASS]: test-5-venmo-trans
-[PASS]: test-6-venmo-trans
-[PASS]: test-7-venmo-trans
+	$ ./run_tests.sh 
+	[PASS]: test-1-venmo-trans
+	[PASS]: test-10-venmo-trans
+	[PASS]: test-11-venmo-trans
+	[PASS]: test-2-venmo-trans
+	[PASS]: test-3-venmo-trans
+	[PASS]: test-4-venmo-trans
+	[PASS]: test-5-venmo-trans
+	[PASS]: test-6-venmo-trans
+	[PASS]: test-7-venmo-trans
 </pre>
 
 
