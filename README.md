@@ -482,16 +482,21 @@ We defined the following data structures in order to solve this problem.
 <b>Algorithm</b>
 
 * When the next payment is processed, read the Json object. Make sure all the fields are defined. If any empty field in Json then print out a warning. 
-
+<pre>
 	Bad Input (IGNORED): {"created_time": "2016-03-29T06:04:40Z", "target": "Matt-Gysel", "actor": ""}
-
+</pre>
 * Map the actor and target to vertex numbers and store it in `vertexNameMap` if they have neve been seen before. Then create an edge which is a tuple of vertices the form `(v1,v2), where v1 < v2`. By enforcing an increasing order we can find the same non-directional edge even if the actor and target are interchanged.
 
 * Finally compare the timestamp (CT) of the payment with the `lastMaxTime` (MT). The result will  fall within the following three categories:
-
+<pre>
 	CT older than MT by more than 59 seconds	: Ignore the edge. The graph does not change. Write out the median degree of the graph.
-	CT older than MT by less than 59 seconds	: MT will not change. No edges need to be evicted. However a new edge is created in edgeGraph and timeIndex. If this edge already exists with an older timeStamp
-		
+	CT older than MT by less than 59 seconds	: MT will not change. No edges need to be evicted. However a new edge is created in edgeGraph and timeIndex. If this edge already exists with an older timeStamp, the edgeGraph does not need to be updated but the timeIndex needs to be updated to the later (CT) time.
+	CT newer than MT by any number of seconds	: MT will change. Now MT = CT. If CT - MT = X then all the edges in the sixtySecWin will move back by 'X' slots. Some of these edges will get evicted since they fall beyond the 60th slot. For each edge evicted, we will update the  edgeGraph by removing the two vertices for each edge from each others list. We will alos update the timeIndex by removing the edge from the dictionary.
+</pre>
 
+
+* Finally write out the median degree of the graph. To do this we create  a new list called `degreeList` in which we populate the degree of each vertex in the graph and then find the median.
+
+<b>Test Cases</b>
 
 
