@@ -475,11 +475,11 @@ We defined the following data structures in order to solve this problem.
 ![venmo-graph](images/sixtySecWin.png)
 
 * We use two global variables in the program:
-
+<pre>
 	currVertexNumber	: This is the next vertex number in monotonically increasing order from 0,1,2,.... that can be assigned to a newly seen name.
 	lastMaxTime		: This is the latest time for which we have seen a venmo payment and created an edge.
-
-<b>Algortihm</b>
+</pre>
+<b>Algorithm</b>
 
 * When the next payment is processed, read the Json object. Make sure all the fields are defined. If any empty field in Json then print out a warning. 
 
