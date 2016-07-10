@@ -475,17 +475,20 @@ We defined the following data structures in order to solve this problem.
 ![venmo-graph](images/sixtySecWin.png)
 
 * We use two global variables in the program:
+
 	currVertexNumber	: This is the next vertex number in monotonically increasing order from 0,1,2,.... that can be assigned to a newly seen name.
 	lastMaxTime		: This is the latest time for which we have seen a venmo payment and created an edge.
 
 <b>Algortihm</b>
 
-* When the next payment is processed, read the Json object. Make sure all the fields are defined. If any empty field in Json then print out a warning 
+* When the next payment is processed, read the Json object. Make sure all the fields are defined. If any empty field in Json then print out a warning. 
+
 	Bad Input (IGNORED): {"created_time": "2016-03-29T06:04:40Z", "target": "Matt-Gysel", "actor": ""}
 
 * Map the actor and target to vertex numbers and store it in `vertexNameMap` if they have neve been seen before. Then create an edge which is a tuple of vertices the form `(v1,v2), where v1 < v2`. By enforcing an increasing order we can find the same non-directional edge even if the actor and target are interchanged.
 
 * Finally compare the timestamp (CT) of the payment with the `lastMaxTime` (MT). The result will  fall within the following three categories:
+
 	CT older than MT by more than 59 seconds	: Ignore the edge. The graph does not change. Write out the median degree of the graph.
 	CT older than MT by less than 59 seconds	: MT will not change. No edges need to be evicted. However a new edge is created in edgeGraph and timeIndex. If this edge already exists with an older timeStamp
 		
