@@ -442,11 +442,11 @@ Generally, we will evaluate your coding challenge with a testing suite that prov
 We receive hundreds of submissions and try to evaluate them all in a timely manner.  We try to get back to all applicants within two or three weeks of submission, but if you have a specific deadline that requires expedited review, you may email us at cc@insightdataengineering.com.  
 
 
-#solution
+#Solution
 
 [Back to Table of Contents] (README.md#table-of-contents)
 
-We(I) have used Python 2.7 for solving this exercise. We used python because that is the latest langauge we have used and hence most familiar. There is robust help on stackoverflow for most problems encountered. Finally python has no language imposed limits on the data size. As long as the computer can handle it, python should be able to handle it as well. This is serious advantage as comapred to R, another language that we are comfortable programming in. Python also has many readymade packages that can be used directly to automate mundane tasks (for example calcuating median of a list)
+We(I) have used Python 2.7 for solving this exercise. We used python because that is the latest langauge we have used and hence most familiar. There is robust help on stackoverflow for most problems encountered. Finally python has no language imposed limits on the data size. As long as the computer can handle it, python should be able to handle it as well. This is serious advantage as compared to R, another language that we are comfortable programming in. Python also has many readymade packages that can be used directly to automate mundane tasks (for example calcuating median of a list)
 
 <b>Data Structures</b>
 
@@ -454,7 +454,7 @@ We defined the following data structures in order to solve this problem.
 
 * *vertexNameMap = dict()*
 
-	The Venmo payment has names of people as actor and target. The Graph to represent this payment will have the people as vertices and the relations between them as an edge. We dont need to deal with the names of people. In order to save memory space we map the names of people to numbers that can be used to represent the vertices. This represented as a dictionary (Associative Array) for a quick lookup whether a name has been already enountered.
+	The Venmo payment has names of people as actor and target. The Graph to represent this payment will have the people as vertices and the relations between them as an edge. We dont need to deal with the names of people. In order to save memory space we map the names of people to numbers that can be used to represent the vertices. This is represented as a dictionary (Associative Array) for a quick lookup whether a name has been already enountered.
 
 * *edgeGraph = dict()*
 
@@ -470,7 +470,7 @@ We defined the following data structures in order to solve this problem.
 
 * *sixtySecWin = []*
 	
-	This is a list that is 60 slots long. Each slot represents one second and conatins a pointer to another list of edges. The pointer in slot 0 points to list of edges that were created at the latest time seen. Every slot represents edges created that many seconds before the current latest edge. Thus slot 10 will contain pointer to all the edges that were created 10 seconds before etc.
+	This is a list that is 60 slots long. Each slot represents one second and contains a pointer to another list of edges. The pointer in slot 0 points to list of edges that were created at the latest time seen. Every slot represents edges created that many seconds before the current latest edge. Thus slot 10 will contain pointer to all the edges that were created 10 seconds before etc.
 
 ![venmo-graph](images/sixtySecWin.png)
 
@@ -485,7 +485,7 @@ We defined the following data structures in order to solve this problem.
 <pre>
 	Bad Input (IGNORED): {"created_time": "2016-03-29T06:04:40Z", "target": "Matt-Gysel", "actor": ""}
 </pre>
-* Map the actor and target to vertex numbers and store it in `vertexNameMap` if they have neve been seen before. Then create an edge which is a tuple of vertices the form `(v1,v2), where v1 < v2`. By enforcing an increasing order we can find the same non-directional edge even if the actor and target are interchanged.
+* Map the actor and target to vertex numbers and store it in `vertexNameMap` if they have never been seen before. Then create an edge which is a tuple of vertices of the form `(v1,v2), where v1 < v2`. By enforcing an increasing order in naming the tuple, we can find the same non-directional edge even if the actor and target are interchanged.
 
 * Finally compare the timestamp (CT) of the payment with the `lastMaxTime` (MT). The result will  fall within the following three categories:
 <pre>
@@ -509,16 +509,15 @@ We defined the following data structures in order to solve this problem.
 
 <pre>
 
+	Description of tests and test cases:
+
 	Test 1	: Default test to test for the directory structure
 	Test 2	: Some edges at 59 seconds, some out of order edges (both within and outside the 60 seconds window), 
 		  some edges where actor and target are interchanged (i.e its the same edge at a different time) and 
 		  finally a edge that should cause eviction of most previous edges.
 	Test 3	: The same edge coming at different times, sometimes out of order (both within and outside 60 seconds window.)
-	Test 4	: The same edge coming in groups of progressively increasing times. The group may be within 60 seconds window or outside 60 second window.
-	Test 5	:
-	Test 6	:
-	Test 7	:
-
+	Test 4	: The same edge coming at the same time, multiple times. The same edge coming in groups of progressively increasing times. 
+		  The group may be within 60 seconds window or outside 60 second window. `
 	Test 10 : Strongly connected graph of ten nodes. Each node succesively making a new edge with one of the remaining nodes. 
 		  We expect the meidan edge to start at 1.00 and stay low for a long time and then progressively increase to 9.00 
 		  and stay that once reached. We created the inputs through a program so dispensed with the names and used numbers 
@@ -533,12 +532,12 @@ We defined the following data structures in order to solve this problem.
 	[PASS]: test-2-venmo-trans
 	[PASS]: test-3-venmo-trans
 	[PASS]: test-4-venmo-trans
-	[PASS]: test-5-venmo-trans
-	[PASS]: test-6-venmo-trans
-	[PASS]: test-7-venmo-trans
 </pre>
 
 
 
+<b>Performance</b>
+
+We ran a very quick and dirty test for our code our laptop. We created an input with a million unique edges all with same timestamp and it was able to process `576550` edges in 40 minutes. This just a datapoint for curiosity's sake and not a lot can be read into it.
 
 
