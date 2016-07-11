@@ -490,8 +490,13 @@ We defined the following data structures in order to solve this problem.
 * Finally compare the timestamp (CT) of the payment with the `lastMaxTime` (MT). The result will  fall within the following three categories:
 <pre>
 	CT older than MT by more than 59 seconds	: Ignore the edge. The graph does not change. Write out the median degree of the graph.
-	CT older than MT by less than 59 seconds	: MT will not change. No edges need to be evicted. However a new edge is created in edgeGraph and timeIndex. If this edge already exists with an older timeStamp, the edgeGraph does not need to be updated but the timeIndex needs to be updated to the later (CT) time.
-	CT newer than MT by any number of seconds	: MT will change. Now MT = CT. If CT - MT = X then all the edges in the sixtySecWin will move back by 'X' slots. Some of these edges will get evicted since they fall beyond the 60th slot. For each edge evicted, we will update the  edgeGraph by removing the two vertices for each edge from each others list. We will alos update the timeIndex by removing the edge from the dictionary.
+	CT older than MT by less than 59 seconds	: MT will not change. No edges need to be evicted. However a new edge is created in edgeGraph and timeIndex. 
+							  If this edge already exists with an older timeStamp, the edgeGraph does not need to be updated but the 
+							  timeIndex needs to be updated to the later (CT) time.
+	CT newer than MT by any number of seconds	: MT will change. Now MT = CT. If CT - MT = X then all the edges in the sixtySecWin will move back by 'X' slots. 
+							  Some of these edges will get evicted since they fall beyond the 60th slot. For each edge evicted, we will update 
+							  the  edgeGraph by removing the two vertices for each edge from each others list. We will alos update the timeIndex 
+							  by removing the edge from the dictionary.
 </pre>
 
 
@@ -500,6 +505,13 @@ We defined the following data structures in order to solve this problem.
 <b>Test Cases</b>
 
 <pre>
+
+	Test 1	: Default test to test for the directory structure
+	Test 2	: 
+	Test 10 : Strongly connected graph of ten nodes. Each node succesively making a new edge with one of the remaining nodes. We expect the meidan edge to start at 1.00 and stay low for a long time		   and then progressively increase to 9.00 and stay that once reached. We created the inputs through a program so dispensed with the names and used numbers in place of names. Note that the 
+	Test 11 : Similar
+
+
 	$ ./run_tests.sh 
 	[PASS]: test-1-venmo-trans
 	[PASS]: test-10-venmo-trans
