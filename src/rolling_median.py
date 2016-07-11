@@ -111,6 +111,9 @@ def createEdge(timeDeltaSeconds, edgeTuple, src, dest, currTime, sixtySecWin, ed
 			offsetToUpdate = int((currTime - timeIndex[edgeTuple]).total_seconds()) + timeDeltaSeconds
 			if offsetToUpdate < 60:
 				sixtySecWin[offsetToUpdate].remove(edgeTuple)
+                else:
+                        return
+
 	sixtySecWin[timeDeltaSeconds].add(edgeTuple)
 	timeIndex[edgeTuple] = currTime
 

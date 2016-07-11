@@ -105,15 +105,14 @@ def evictEdgeFromEdgeGraph(edgeRemovalList, edgeGraph):
 ## Procedure to create the edge in the 60 second window list. The slot at zero is always all the edges that were seen at the latest time.
 ## Each additional slot is 1 second older (thus 60 slots for 60 seconds)
 ## The edge is also created in the edgeGraph which helps us maintain the graph in a different form which helps us calculate the degree quickly.
-def createEdge(timeDeltaSeconds, edgeTuple, src, dest, currTime):
-	global sixtySecWin
-	global edgeGraph
-	global timeIndex
+def createEdge(timeDeltaSeconds, edgeTuple, src, dest, currTime, sixtySecWin, edgeGraph, timeIndex):
 	if edgeTuple in timeIndex:
 		if timeIndex[edgeTuple] < currTime:
 			offsetToUpdate = int((currTime - timeIndex[edgeTuple]).total_seconds()) + timeDeltaSeconds
 			if offsetToUpdate < 60:
 				sixtySecWin[offsetToUpdate].remove(edgeTuple)
+		else:
+			return
 	sixtySecWin[timeDeltaSeconds].add(edgeTuple)
 	timeIndex[edgeTuple] = currTime
 
@@ -146,11 +145,11 @@ def processNextPay(eachLine, vertexNameMap, timeIndex, sixtySecWin, edgeGraph):
 	if timeDeltaSeconds > 59:		### The current record is older than 59 seconds. Ignore
 		return
 	elif timeDeltaSeconds > -1:		## The current record is within 60 second window but older than latest time payment looked at.
-		createEdge(timeDeltaSeconds, edgeTuple, src, dest, currTime)
+		createEdge(timeDeltaSeconds, edgeTuple, src, dest, currTime, sixtySecWin, edgeGraph, timeIndex)
 	else:					## the current record is the latest time payment ever looked at till now.
 		lastMaxTime = currTime
 		evictEdgeSixtyWin(-timeDeltaSeconds, timeIndex, sixtySecWin, edgeGraph)
-		createEdge(0, edgeTuple, src, dest, currTime)
+		createEdge(0, edgeTuple, src, dest, currTime, sixtySecWin, edgeGraph, timeIndex)
 
 	
 
@@ -187,14 +186,14 @@ if len(sys.argv) < 3:
 
 inputPayFile, outputDegFile = openFile(sys.argv[1], sys.argv[2])
 for eachLine in inputPayFile:
-	#print eachLine
+	print eachLine
 	error = processNextPay(eachLine, vertexNameMap, timeIndex, sixtySecWin, edgeGraph)
 	if error:
 		continue
 	median = "%.2f" % findMedianDegree(edgeGraph)
 	outputDegFile.write('%s' % median)
 	outputDegFile.write("\n")
-	#print edgeGraph
-        #print timeIndex
-        #print sixtySecWin
+	print edgeGraph
+        print timeIndex
+        print sixtySecWin
 closeFile(inputPayFile, outputDegFile)	

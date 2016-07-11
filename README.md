@@ -504,12 +504,26 @@ We defined the following data structures in order to solve this problem.
 
 <b>Test Cases</b>
 
+* We ran the program over multiple test cases. We compared the output of the program with manually generated output. But more importantly we checked the data structures for these inputs to see they were doing what we expected them to dofor these test cases: were edges being evicted, were the time indices being updated, were the degrees being updated etc.
+
+
 <pre>
 
 	Test 1	: Default test to test for the directory structure
-	Test 2	: 
-	Test 10 : Strongly connected graph of ten nodes. Each node succesively making a new edge with one of the remaining nodes. We expect the meidan edge to start at 1.00 and stay low for a long time		   and then progressively increase to 9.00 and stay that once reached. We created the inputs through a program so dispensed with the names and used numbers in place of names. Note that the 
-	Test 11 : Similar
+	Test 2	: Some edges at 59 seconds, some out of order edges (both within and outside the 60 seconds window), 
+		  some edges where actor and target are interchanged (i.e its the same edge at a different time) and 
+		  finally a edge that should cause eviction of most previous edges.
+	Test 3	: The same edge coming at different times, sometimes out of order (both within and outside 60 seconds window.)
+	Test 4	: The same edge coming in groups of progressively increasing times. The group may be within 60 seconds window or outside 60 second window.
+	Test 5	:
+	Test 6	:
+	Test 7	:
+
+	Test 10 : Strongly connected graph of ten nodes. Each node succesively making a new edge with one of the remaining nodes. 
+		  We expect the meidan edge to start at 1.00 and stay low for a long time and then progressively increase to 9.00 
+		  and stay that once reached. We created the inputs through a program so dispensed with the names and used numbers 
+		  in place of names. Note that the timestamp for all edges is the same.
+	Test 11 : Similar to test 10 but the time stamp moves forward after 45 transactions resulting in eviction of all the previous edges.
 
 
 	$ ./run_tests.sh 
