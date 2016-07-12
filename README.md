@@ -451,14 +451,22 @@ We(I) have used Python 2.7 for solving this exercise. We used python because tha
 <b>Data Structures</b>
 
 We defined the following data structures in order to solve this problem.
+Let:
+V = Number of vertices in the graph
+E = number of edges in the graph
 
 * *vertexNameMap = dict()*
 
 	The Venmo payment has names of people as actor and target. The Graph to represent this payment will have the people as vertices and the relations between them as an edge. We dont need to deal with the names of people. In order to save memory space we map the names of people to numbers that can be used to represent the vertices. This is represented as a dictionary (Associative Array) for a quick lookup whether a name has been already enountered.
 
+		`O(vertexNameMap) <= O(V)`
+	
+
 * *edgeGraph = dict()*
 
 	The relation between the actor and the target creates an edge. In this exercise the edges are non-directional (i.e `actor <-> target` is the same as `target <-> actor`). However to find the degree of the graph quickly we treat the non-diretional edge as two uni-directional edges `actor -> target` and `actor <- target`. We then add these edges in the edgeGraph data structure, which is again a dictionary. So in order to repesent the edge `actor <-> target`, we have `edgeGraph[actor] = target` and `edgeGraph[target] = actor`. We do this for all the edges encountered. Since a vertex can talk to multiple other vertices we have to maintain a list. We chose a set instead of a list, so that we don't need to worry about duplicates.  The degree for any vertex `v` at any time then is given by `degree = len(edgeGraph[v])`. 
+
+		`O(1) <= O(edgeGraph) <= O(V^2)`
 
 ![venmo-graph](images/edgeGraph.png)
 
@@ -466,11 +474,16 @@ We defined the following data structures in order to solve this problem.
 
 	We need to keep the latest time that an edge was encountered. This is so that if the same edge is encountered again but with an earlier time stamp (since payments can be out of order) we can ignore it. There can only be one edge between a pair of vertices in the graph.
 
+		`O(1) <= O(timeIndex) <= O(V^2)`
+
 ![venmo-graph](images/timeIndex.png)
 
 * *sixtySecWin = []*
 	
 	This is a list that is 60 slots long. Each slot represents one second and contains a pointer to another list of edges. The pointer in slot 0 points to list of edges that were created at the latest time seen. Every slot represents edges created that many seconds before the current latest edge. Thus slot 10 will contain pointer to all the edges that were created 10 seconds before etc.
+
+		`O(1) <= O(timeIndex) <= O(V^2)`
+
 
 ![venmo-graph](images/sixtySecWin.png)
 
@@ -479,6 +492,11 @@ We defined the following data structures in order to solve this problem.
 	currVertexNumber: This is the next vertex number in monotonically increasing order from 0,1,2,.... that can be assigned to a newly seen name.
 	lastMaxTime	: This is the latest time for which we have seen a venmo payment and created an edge.
 </pre>
+
+
+While the memory requirements of our data structures is O(V^2), in reality the graph is usually sparsely populated, which is why our implementation will be more efficient than other representations of the graph (e.g.: matrices.)
+
+
 <b>Algorithm</b>
 
 * When the next payment is processed, read the Json object. Make sure all the fields are defined. If any empty field in Json then print out a warning. 
@@ -538,6 +556,4 @@ We defined the following data structures in order to solve this problem.
 
 <b>Performance</b>
 
-We ran a very quick and dirty test for our code our laptop. We created an input with a million unique edges all with same timestamp and it was able to process `576550` edges in 40 minutes. This just a datapoint for curiosity's sake and not a lot can be read into it.
-
-
+* We ran a very quick and dirty test for our code on our laptop. We created an input with a million unique edges all with same timestamp and it was able to process `576550` edges in 40 minutes. This is just a datapoint for curiosity's sake.
