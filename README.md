@@ -13,7 +13,7 @@
 11. [Solution] (README.md#solution)
 
 
-This is the coding challenge I completed for Insight Data Engineering program. The firs parrt if the challenge and the second part is the solution I came up with.
+This is the coding challenge I completed for Insight Data Engineering program. The first part is the challenge and the second part is the solution I came up with.
 
 
 For this coding challenge, you will develop tools that could help analyze Venmo’s dataset. Some of the challenges here mimic real world problems.
